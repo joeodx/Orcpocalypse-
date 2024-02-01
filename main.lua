@@ -1,4 +1,4 @@
-require("Player")
+require("Player1")
 require("FloorPlatform")
 
 function love.load()

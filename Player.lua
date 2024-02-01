@@ -1,6 +1,5 @@
 Player = {}
 
-
 function Player:load()
     self.x = 50
     self.y = love.graphics.getHeight() - 35
