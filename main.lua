@@ -1,4 +1,5 @@
-require("Player1")
+-- this is a comment
+require("Player")
 require("FloorPlatform")
 
 function love.load()
