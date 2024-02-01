@@ -1,6 +1,8 @@
 Player = {}
 
 function Player:load()
+    gravity = 1500
+    jumpHeight = 200
     self.x = 50
     self.y = love.graphics.getHeight() - 35
     self.width = 20
@@ -30,6 +32,34 @@ function Player:move(dt)
     --     self.y = self.y + self.speed * dt
     end
 end
+
+function Player:move(dt)
+    if love.keyboard.isDown("d") then
+        self.x = self.x + self.speed * dt
+    elseif love.keyboard.isDown("a") then 
+        self.x = self.x - self.speed * dt
+    end
+
+    if love.keyboard.isDown("space") and not self.isJumping then
+        self.isJumping = true
+        self.jumpVelocity = -math.sqrt(2 * gravity * jumpHeight)
+    end
+
+    if self.isJumping then
+        self.y = self.y + self.jumpVelocity * dt
+        self.jumpVelocity = self.jumpVelocity + gravity * dt
+
+        if self.y > love.graphics.getHeight() - 35 - self.height then
+            self.y = love.graphics.getHeight() - 35 - self.height
+            self.isJumping = false
+        end
+    end
+end
+
+
+
+
+
 
 function Player:crouch(dt)
     local crouchHeight = 50
