@@ -14,6 +14,7 @@ function Player:update(dt)
     self:move(dt)
     self:checkBoundries()
     self:crouch(dt)
+    self:jump(dt)
     
 end
 
@@ -33,7 +34,7 @@ function Player:move(dt)
     end
 end
 
-function Player:move(dt)
+function Player:jump(dt)
     if love.keyboard.isDown("d") then
         self.x = self.x + self.speed * dt
     elseif love.keyboard.isDown("a") then 
