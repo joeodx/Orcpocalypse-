@@ -16,7 +16,6 @@ function Player:update(dt)
     self:move(dt)
     self:checkBoundries()
     self:crouch(dt)
-<<<<<<< HEAD
 
     if love.keyboard.isDown("space") and not self.isJumping then
         self:shoot()
@@ -30,10 +29,8 @@ function Player:update(dt)
             table.remove(self.bullets, _)
         end
     end
-=======
     self:jump(dt)
     
->>>>>>> 3e485d9437128bb067c534999db644814fbde7b2
 end
     
 
