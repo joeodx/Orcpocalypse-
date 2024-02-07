@@ -1,4 +1,5 @@
 Player = {}
+bullets = {}
 
 function Player:load()
     gravity = 1500
@@ -8,6 +9,9 @@ function Player:load()
     self.width = 20
     self.height = 100
     self.speed = 500
+    -- 1 for right, -1 for left
+    self.direction = 1
+
 end
 
 function Player:update(dt)
@@ -15,6 +19,7 @@ function Player:update(dt)
     self:checkBoundries()
     self:crouch(dt)
     self:jump(dt)
+    self:shoot(dt)
     
 end
 
@@ -25,8 +30,10 @@ end
 function Player:move(dt)
     if love.keyboard.isDown("d") then
         self.x = self.x + self.speed * dt
+        self.direction = 1
     elseif love.keyboard.isDown("a") then 
         self.x = self.x - self.speed * dt
+        self.direction = -1
     -- elseif love.keyboard.isDown("w") then 
     --     self.y = self.y - self.speed * dt
     -- elseif love.keyboard.isDown("s") then 
@@ -41,7 +48,7 @@ function Player:jump(dt)
         self.x = self.x - self.speed * dt
     end
 
-    if love.keyboard.isDown("space") and not self.isJumping then
+    if love.keyboard.isDown("w") and not self.isJumping then
         self.isJumping = true
         self.jumpVelocity = -math.sqrt(2 * gravity * jumpHeight)
     end
@@ -85,3 +92,22 @@ function Player:checkBoundries()
         self.y = love.graphics.getHeight() - self.height - 35
     end 
 end
+
+function Player:shoot(dt)
+        if love.keyboard.isDown("space") then
+            -- Modify the values below to adjust bullet properties
+            local bulletSpeed = 800
+            local bulletWidth = 5
+            local bulletHeight = 5
+    
+            -- Calculate bullet position based on player's direction
+            local bulletX = self.x + (self.width * self.direction)
+            local bulletY = self.y + self.height / 2 - bulletHeight / 2
+    
+            -- Create bullet object
+            local bullet = { x = bulletX, y = bulletY, width = bulletWidth, height = bulletHeight, speed = bulletSpeed * self.direction }
+    
+            -- Insert bullet into a table or send it to your bullet manager
+            table.insert(bullets, bullet)
+        end
+    end
