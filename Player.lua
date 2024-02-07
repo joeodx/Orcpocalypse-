@@ -12,16 +12,33 @@ function Player:load()
     -- 1 for right, -1 for left
     self.direction = 1
 
+    self.bullets = {} 
+    self.bulletSpeed = 800
 end
 
 function Player:update(dt)
     self:move(dt)
     self:checkBoundries()
     self:crouch(dt)
+
+    if love.keyboard.isDown("space") and not self.isJumping then
+        self:shoot()
+    end
+
+    for _, bullet in ipairs(self.bullets) do
+        bullet.x = bullet.x + bullet.speed * dt
+
+        -- Remove bullets that go off-screen
+        if bullet.x > love.graphics.getWidth() then
+            table.remove(self.bullets, _)
+        end
+    end
     self:jump(dt)
     self:shoot(dt)
     
 end
+    
+
 
 function Player:draw()
     love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
@@ -64,8 +81,29 @@ function Player:jump(dt)
     end
 end
 
+function Player:shoot()
+    local bullet = {
+        x = self.x + self.width , -- Adjust this based on where you want the bullet to spawn
+        y = self.y + self.height / 2,
+        width = 10,
+        height = 5,
+        speed = self.bulletSpeed,
+    }
+
+    table.insert(self.bullets, bullet)
+end
+
+function Player:drawBullets()
+    for _, bullet in ipairs(self.bullets) do
+        love.graphics.rectangle("fill", bullet.x, bullet.y, bullet.width, bullet.height)
+    end
+end
 
 
+function Player:draw()
+    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+    self:drawBullets()
+end
 
 
 
