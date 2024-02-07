@@ -16,7 +16,7 @@ function FloorPlatform:draw()
 end
 
 
-function Enemies:checkBoundries()
+function FloorPlatform:checkBoundries()
     if self.x < 0 then 
         self.x = 0
     elseif self.x + self.width > love.graphics.getWidth() then 
