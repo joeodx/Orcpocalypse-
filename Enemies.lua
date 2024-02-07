@@ -8,7 +8,8 @@ function Enemies:load()
     self.y = love.graphics.getHeight() - 35
     self.width = 20
     self.height = 100
-    self.speed = 500
+    self.speed = 100
+    self.xVel = -self.speed
     -- 1 for right, -1 for left
     self.direction = -1
 
@@ -16,6 +17,7 @@ end
 
 function Enemies:update(dt)
     Enemies:checkBoundries()
+    Enemies:move(dt)
 end
 
 function Enemies:draw()
@@ -33,6 +35,12 @@ function Enemies:checkBoundries()
     elseif self.y + self.height > love.graphics.getHeight() - 35 then
         self.y = love.graphics.getHeight() - self.height - 35
     end 
+end
+
+function Enemies:move(dt)
+    --  moving the ball
+    self.x = self.x + self.xVel * dt
+
 end
 
     
