@@ -5,15 +5,21 @@ function Player:load()
     gravity = 1500
     jumpHeight = 500
     self.x = 50
-    self.y = love.graphics.getHeight() - 35
-    self.width = 20
-    self.height = 100
+    self.y = love.graphics.getHeight() - 15
+    self.width = 22 -- Adjust the width of the player image
+    self.height = 22 -- Adjust the height of the player image
     self.speed = 500
     self.direction = 1
     self.isJumping = false
 
     self.bullets = {} 
     self.bulletSpeed = 800
+
+    -- Load player image
+    self.image = love.graphics.newImage("orc.png")
+
+    self.floorPlatform2 = floorPlatform2
+    self.floorPlatform3 = floorPlatform3
 end
 
 function Player:update(dt)
@@ -52,10 +58,19 @@ function Player:update(dt)
     if self:checkCollisionWithPlatform(FloorPlatform2) then
         self.y = FloorPlatform2.y - self.height
     end
+
+    -- Check for collision with FloorPlatform2
+    if self:checkCollisionWithPlatform(FloorPlatform3) then
+        self.y = FloorPlatform3.y - self.height
+    end
+
 end
 
 function Player:draw()
-    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+    -- Draw player image
+    love.graphics.draw(self.image, self.x, self.y)
+
+    -- Draw bullets
     self:drawBullets()
 end
 

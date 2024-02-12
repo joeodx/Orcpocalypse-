@@ -4,7 +4,7 @@ function FloorPlatform2:load()
     self.width = 200  -- Adjust the width as needed
     self.height = 15
     self.x = (love.graphics.getWidth() - self.width) / 2  -- Center the platform horizontally
-    self.y = love.graphics.getHeight() / 2 - self.height / 2  -- Center the platform vertically
+    self.y = love.graphics.getHeight() / 2 - self.height / -1  -- Center the platform vertically
 end
 
 function FloorPlatform2:update(dt)
