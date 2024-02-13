@@ -20,6 +20,8 @@ function Player:update(dt)
     self:move(dt)
     self:checkBoundries()
     self:crouch(dt)
+    self:jump(dt)
+    self:shoot(dt)
 
     if love.keyboard.isDown("space") and not self.isJumping then
         self:shoot()
@@ -33,8 +35,16 @@ function Player:update(dt)
             table.remove(self.bullets, _)
         end
     end
-    self:jump(dt)
-    self:shoot(dt)
+
+
+        -- Check for collision with FloorPlatform2
+        if self:checkCollisionWithPlatform(FloorPlatform2) then
+            self.y = FloorPlatform2.y - self.height
+        end
+        -- Check for collision with FloorPlatform2
+        if self:checkCollisionWithPlatform(FloorPlatform3) then
+            self.y = FloorPlatform3.y - self.height
+        end
     
 end
     
@@ -156,3 +166,25 @@ function Player:shoot(dt)
 --         self.x = 50 and self.y = love.graphics.getHeight() - 35
     
 -- end
+
+function Player:checkCollisionWithPlatform(platform)
+    return self.x < platform.x + platform.width and
+           self.x + self.width > platform.x and
+           self.y + self.height > platform.y and
+           self.y < platform.y + platform.height
+end
+
+
+function Player:checkBoundaries()
+    if self.x < 0 then 
+        self.x = 0
+    elseif self.x + self.width > love.graphics.getWidth() then 
+        self.x = love.graphics.getWidth() - self.width
+    elseif self.y < 0 then 
+        self.y = 0
+    elseif self.y + self.height > love.graphics.getHeight() - 35 then
+        self.y = love.graphics.getHeight() - self.height - 35
+        self.isJumping = false  -- Reset jump state when landing on the ground
+    end 
+end
+
