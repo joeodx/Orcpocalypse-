@@ -1,3 +1,5 @@
+require("Player")
+
 Enemies = {}
 
 function Enemies:new(x, y)
@@ -16,9 +18,7 @@ function Enemies:new(x, y)
 end
 
 function Enemies:load()
-    -- Initialize a table to hold enemy instances
-    self.enemyInstances = {}
-end
+
 
 function Enemies:update(dt)
     -- Update each enemy instance
@@ -41,15 +41,7 @@ function Enemies:draw()
     end
 end
 
-function Enemies:checkBoundaries()
-    for _, enemy in ipairs(self.enemyInstances) do
-        if enemy.x < 0 then 
-            enemy.x = 0
-            enemy.direction = 1 -- Change direction
-        elseif enemy.x + enemy.width > love.graphics.getWidth() then 
-            enemy.x = love.graphics.getWidth() - enemy.width
-            enemy.direction = -1 -- Change direction
-        end 
+
     end
 end
 
@@ -60,4 +52,4 @@ function Enemies:move(dt)
     end
 end
 
-return Enemies
+

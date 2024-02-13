@@ -132,9 +132,4 @@ function Player:checkBoundaries()
     end 
 end
 
-function Player:checkCollisionWithPlatform(platform)
-    return self.x < platform.x + platform.width and
-           self.x + self.width > platform.x and
-           self.y + self.height > platform.y and
-           self.y < platform.y + platform.height
-end
+
