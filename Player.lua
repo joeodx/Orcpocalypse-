@@ -3,7 +3,7 @@ bullets = {}
 
 function Player:load()
     gravity = 1500
-    jumpHeight = 200
+    jumpHeight = 500
     self.x = 50
     self.y = love.graphics.getHeight() - 35
     self.width = 20
@@ -151,9 +151,9 @@ function Player:shoot(dt)
     end
 
 
-function Player:inContactWithEnemies()
-    if checkCollision(self, Enemies) then
-        self.x = 50 and self.y = love.graphics.getHeight() - 35
+-- function Player:inContactWithEnemies()
+--     if checkCollision(self, Enemies) then
+--         self.x = 50 and self.y = love.graphics.getHeight() - 35
     
-end
+-- end
 
