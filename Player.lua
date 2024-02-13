@@ -149,3 +149,11 @@ function Player:shoot(dt)
             table.insert(bullets, bullet)
         end
     end
+
+
+function Player:inContactWithEnemies()
+    if checkCollision(self, Enemies) then
+        self.x = 50 and self.y = love.graphics.getHeight() - 35
+    
+end
+
