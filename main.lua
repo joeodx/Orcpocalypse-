@@ -1,21 +1,30 @@
 -- this is a comment
 require("Player")
 require("FloorPlatform")
--- require("Enemies")
+
 
 function love.load()
     Player:load()
     FloorPlatform:load()
-    -- Enemies:load()
+
     
+
+    -- Load background image
+    backgroundImage = love.graphics.newImage("background.jpg")
+
+    -- Get dimensions of the background image
+    bgWidth = backgroundImage:getWidth()
+    bgHeight = backgroundImage:getHeight()
+
+    -- Calculate scaling factors to fit the background image to the screen
+    scaleX = love.graphics.getWidth() / bgWidth
+    scaleY = love.graphics.getHeight() / bgHeight
 end
-
-
 
 function love.update(dt)
     Player:update(dt)
     FloorPlatform:update(dt)
-    -- Enemies:update(dt)
+
 
     for i = #bullets, 1, -1 do
         local bullet = bullets[i]
@@ -27,21 +36,12 @@ function love.update(dt)
     end
 end
 
-
 function love.draw()
+    -- Draw background image, scaling it to fit the screen
+    love.graphics.draw(backgroundImage, 0, 0, 0, scaleX, scaleY)
+
+    -- Draw game objects
     Player:draw()
     FloorPlatform:draw()
-    -- Enemies:draw()
-    for _, bullet in ipairs(bullets) do
-        love.graphics.rectangle("fill", bullet.x, bullet.y, bullet.width, bullet.height)
-    end
-end
 
-function checkCollision(a, b)
-    --  checking if the objects are colliding
-    if a.x + a.width > b.x and a.x < b.x + b.width and a.y + a.height > b.y and a.y < b.y + b.height then
-        return true
-    else
-        return false
-    end
-end
+end 
