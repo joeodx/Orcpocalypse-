@@ -156,4 +156,3 @@ function Player:shoot(dt)
 --         self.x = 50 and self.y = love.graphics.getHeight() - 35
     
 -- end
-
