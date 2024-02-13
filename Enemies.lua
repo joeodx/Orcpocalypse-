@@ -1,3 +1,5 @@
+require("Player")
+
 Enemies = {}
 
 
@@ -35,6 +37,12 @@ function Enemies:checkBoundries()
     elseif self.y + self.height > love.graphics.getHeight() - 35 then
         self.y = love.graphics.getHeight() - self.height - 35
     end 
+
+    if self.x <= 0 then
+        self.xVel = self.speed
+    elseif self.x + self.width >= love.graphics.getWidth() then
+        self.xVel = -self.speed
+    end
 end
 
 function Enemies:move(dt)
@@ -43,4 +51,4 @@ function Enemies:move(dt)
 
 end
 
-    
+
