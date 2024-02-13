@@ -44,3 +44,4 @@ function love.draw()
     Player:draw()
     FloorPlatform:draw()
 
+end 
