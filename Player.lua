@@ -151,9 +151,9 @@ function Player:shoot(dt)
     end
 
 
-function Player:inContactWithEnemies()
-    if checkCollision(self, Enemies) then
-        self.x = 50 and self.y = love.graphics.getHeight() - 35
+-- function Player:inContactWithEnemies()
+--     if checkCollision(self, Enemies) then
+--         self.x = 50 and self.y = love.graphics.getHeight() - 35
     
-end
+-- end
 
