@@ -11,7 +11,6 @@ function Player:load()
     self.speed = 500
     self.direction = 1
     self.isJumping = false
-
     self.bullets = {} 
     self.bulletSpeed = 800
 
@@ -55,14 +54,14 @@ function Player:update(dt)
     end
 
     -- Check for collision with FloorPlatform2
-    if self:checkCollisionWithPlatform(FloorPlatform2) then
-        self.y = FloorPlatform2.y - self.height
-    end
+    -- if self:checkCollisionWithPlatform(FloorPlatform2) then
+    --     self.y = FloorPlatform2.y - self.height
+    -- end
 
     -- Check for collision with FloorPlatform2
-    if self:checkCollisionWithPlatform(FloorPlatform3) then
-        self.y = FloorPlatform3.y - self.height
-    end
+    -- if self:checkCollisionWithPlatform(FloorPlatform3) then
+    --     self.y = FloorPlatform3.y - self.height
+    -- end
 
 end
 
@@ -91,14 +90,13 @@ function Player:jump()
 end
 
 function Player:shoot()
-    local bullet = {
-        x = self.x + self.width , -- Adjust this based on where you want the bullet to spawn
-        y = self.y + self.height / 2,
-        width = 10,
-        height = 5,
-        speed = self.bulletSpeed,
-    }
+    local bulletX = self.x + (self.width * self.direction)
+    local bulletY = self.y + self.height / 2
+    local bulletWidth = 10
+    local bulletHeight = 5
+    local bulletSpeed = self.bulletSpeed * self.direction
 
+    local bullet = { x = bulletX, y = bulletY, width = bulletWidth, height = bulletHeight, speed = bulletSpeed }
     table.insert(self.bullets, bullet)
 end
 
@@ -132,24 +130,24 @@ function Player:checkBoundaries()
     end 
 end
 
-function Player:shoot(dt)
-        if love.keyboard.isDown("space") then
-            -- Modify the values below to adjust bullet properties
-            local bulletSpeed = 800
-            local bulletWidth = 5
-            local bulletHeight = 5
+-- function Player:shoot(dt)
+--         if love.keyboard.isDown("space") then
+--             -- Modify the values below to adjust bullet properties
+--             local bulletSpeed = 800
+--             local bulletWidth = 5
+--             local bulletHeight = 5
     
-            -- Calculate bullet position based on player's direction
-            local bulletX = self.x + (self.width * self.direction)
-            local bulletY = self.y + self.height / 2 - bulletHeight / 2
+--             -- Calculate bullet position based on player's direction
+--             local bulletX = self.x + (self.width * self.direction)
+--             local bulletY = self.y + self.height / 2 - bulletHeight / 2
     
-            -- Create bullet object
-            local bullet = { x = bulletX, y = bulletY, width = bulletWidth, height = bulletHeight, speed = bulletSpeed * self.direction }
+--             -- Create bullet object
+--             local bullet = { x = bulletX, y = bulletY, width = bulletWidth, height = bulletHeight, speed = bulletSpeed * self.direction }
     
-            -- Insert bullet into a table or send it to your bullet manager
-            table.insert(bullets, bullet)
-        end
-    end
+--             -- Insert bullet into a table or send it to your bullet manager
+--             table.insert(bullets, bullet)
+--         end
+--     end
 
 
 -- function Player:inContactWithEnemies()
