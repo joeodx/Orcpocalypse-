@@ -17,39 +17,48 @@ function Enemies:new(x, y)
     return enemy
 end
 
-function Enemies:load()
-
+function Enemies:initialize()
+    self.enemyInstances = {}
+end
 
 function Enemies:update(dt)
-    -- Update each enemy instance
     for _, enemy in ipairs(self.enemyInstances) do
         enemy:checkBoundaries()
         enemy:move(dt)
     end
 
-    -- Spawn new enemies randomly
-    if love.math.random() < 0.01 then -- Adjust this probability as needed
+    if love.math.random() < 0.01 then
         local newEnemy = self:new()
         table.insert(self.enemyInstances, newEnemy)
     end
 end
 
 function Enemies:draw()
-    -- Draw each enemy instance
     for _, enemy in ipairs(self.enemyInstances) do
         love.graphics.rectangle("fill", enemy.x, enemy.y, enemy.width, enemy.height)
     end
 end
 
-
-    end
-end
-
 function Enemies:move(dt)
     for _, enemy in ipairs(self.enemyInstances) do
-        -- Move each enemy
         enemy.x = enemy.x + enemy.xVel * dt * enemy.direction
     end
 end
 
+function Enemies:checkBoundries()
+    if self.x < 0 then 
+        self.x = 0
+    elseif self.x + self.width > love.graphics.getWidth() then 
+        self.x = love.graphics.getWidth() - self.width
+    elseif self.y < 0 then 
+        self.y = 0
+    elseif self.y + self.height > love.graphics.getHeight() - 35 then
+        self.y = love.graphics.getHeight() - self.height - 35
+    end 
 
+    if self.x <= 0 then
+        self.xVel = self.speed
+    elseif self.x + self.width >= love.graphics.getWidth() then
+        self.xVel = -self.speed
+    end
+end

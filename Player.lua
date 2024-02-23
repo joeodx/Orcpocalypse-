@@ -43,7 +43,7 @@ function Player:update(dt)
         bullet.x = bullet.x + bullet.speed * dt
 
         -- Remove bullets that go off-screen
-        if bullet.x > love.graphics.getWidth() then
+        if bullet.x > love.graphics.getWidth() or bullet.x < 0 then
             table.remove(self.bullets, i)
         end
     end
@@ -89,15 +89,19 @@ function Player:jump()
     self.jumpVelocity = -math.sqrt(2 * gravity * jumpHeight)
 end
 
-function Player:shoot()
-    local bulletX = self.x + (self.width * self.direction)
-    local bulletY = self.y + self.height / 2
-    local bulletWidth = 10
-    local bulletHeight = 5
-    local bulletSpeed = self.bulletSpeed * self.direction
+function Player:shoot(dt)
+    if love.keyboard.isDown("space") then
+        local bulletSpeed = 800
+        local bulletWidth = 5
+        local bulletHeight = 5
 
-    local bullet = { x = bulletX, y = bulletY, width = bulletWidth, height = bulletHeight, speed = bulletSpeed }
-    table.insert(self.bullets, bullet)
+        local bulletX = self.x + (self.width * self.direction)
+        local bulletY = self.y + self.height / 2 - bulletHeight / 2
+
+        local bullet = { x = bulletX, y = bulletY, width = bulletWidth, height = bulletHeight, speed = bulletSpeed * self.direction }
+
+        table.insert(self.bullets, bullet)
+    end
 end
 
 function Player:drawBullets()
@@ -109,12 +113,17 @@ end
 function Player:crouch(dt)
     local crouchHeight = 50
     if love.keyboard.isDown("s") then 
+        -- CHECK IF ENOUGH SPACE TO CROUCH
+        local canCrouch = true
+
+        if canCrouch then
         self.y = self.y + (self.height - crouchHeight)
         self.height = crouchHeight
     else
         self.y = self.y - (self.height - 100)
         self.height = 100
     end
+end
 end
 
 function Player:checkBoundaries()
