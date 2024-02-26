@@ -8,6 +8,7 @@ function FloorPlatform2:load()
 end
 
 function FloorPlatform2:update(dt)
+    self:checkBoundaries()
 end
 
 function FloorPlatform2:draw()
@@ -21,8 +22,14 @@ function FloorPlatform2:checkBoundaries()
         self.x = love.graphics.getWidth() - self.width
     elseif self.y < 0 then 
         self.y = 0
-    elseif self.y + self.height > love.graphics.getHeight() - 35 then
-        self.y = love.graphics.getHeight() - self.height - 35
+    elseif self.y + self.height > love.graphics.getHeight()  then
+        self.y = love.graphics.getHeight() - self.height 
     end 
 end
 
+function FloorPlatform2:collidesWith(player)
+    return self.x < player.x + player.width and
+           player.x < self.x + self.width and
+           self.y < player.y + player.height and
+           player.y < self.y + self.height
+end

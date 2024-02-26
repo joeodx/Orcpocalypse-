@@ -1,12 +1,16 @@
 -- this is a comment
 require("Player")
 require("FloorPlatform")
+require("FloorPlatform2")
+
 require("Enemies")
+score = 0 
 
 
 function love.load()
     Player:load()
     FloorPlatform:load()
+    FloorPlatform2:load()
     Enemies:initialize()
 
     
@@ -27,6 +31,7 @@ function love.update(dt)
     Player:update(dt)
     FloorPlatform:update(dt)
     Enemies:update(dt)
+    FloorPlatform2:update(dt)
 
     for _, enemy in ipairs(Enemies.enemyInstances) do
         if CheckCollision(Player, enemy) then
@@ -47,12 +52,15 @@ end
 
         for j, enemy in ipairs(Enemies.enemyInstances) do
             if CheckCollision(bullet, enemy) then
+
+                
                 -- Handle collision between bullet and enemy
                 -- For example, remove the bullet and decrease enemy's health
                 table.remove(Player.bullets, i)
                 -- Assuming enemies have health attribute
                 enemy.health = enemy.health - 1
                 if enemy.health <= 0 then
+                    score = score + 1
                     -- Remove the enemy if it's health drops to zero or below
                     table.remove(Enemies.enemyInstances, j)
                 end
@@ -76,9 +84,13 @@ function love.draw()
     -- Draw background image, scaling it to fit the screen
     love.graphics.draw(backgroundImage, 0, 0, 0, scaleX, scaleY)
 
+    love.graphics.print("Enemies Killed: " .. score, 10, 10)
+
+
     -- Draw game objects
     Player:draw()
     FloorPlatform:draw()
+    FloorPlatform2:draw()
     Enemies:draw()
 
 end 

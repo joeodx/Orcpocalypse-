@@ -6,8 +6,8 @@ function Player:load()
     jumpHeight = 500
     self.x = 50
     self.y = love.graphics.getHeight() - 15
-    self.width = 22 -- Adjust the width of the player image
-    self.height = 22 -- Adjust the height of the player image
+    self.width = 40 -- Adjust the width of the player image
+    self.height = 40 -- Adjust the height of the player image
     self.speed = 500
     self.direction = 1
     self.isJumping = false
@@ -25,7 +25,11 @@ function Player:update(dt)
     self:move(dt)
     self:checkBoundaries()
     self:crouch(dt)
-
+    
+    if FloorPlatform2:collidesWith(self) then
+        -- Adjust player's position if colliding with FloorPlatform2
+        self.y = FloorPlatform2.y - self.height
+    end
     -- Jumping
     if love.keyboard.isDown("w") and not self.isJumping then
         self:jump()
@@ -95,8 +99,8 @@ function Player:shoot(dt)
         local bulletWidth = 5
         local bulletHeight = 5
 
-        local bulletX = self.x + (self.width * self.direction)
-        local bulletY = self.y + self.height / 2 - bulletHeight / 2
+        local bulletX = self.x + (self.width * self.direction) + 150
+        local bulletY = self.y + self.height / 2 - bulletHeight / 2 + 150
 
         local bullet = { x = bulletX, y = bulletY, width = bulletWidth, height = bulletHeight, speed = bulletSpeed * self.direction }
 
@@ -134,7 +138,7 @@ function Player:checkBoundaries()
     elseif self.y < 0 then 
         self.y = 0
     elseif self.y + self.height > love.graphics.getHeight() - 35 then
-        self.y = love.graphics.getHeight() - self.height - 35
+        self.y = love.graphics.getHeight() - self.height - 205
         self.isJumping = false  -- Reset jump state when landing on the ground
     end 
 end
