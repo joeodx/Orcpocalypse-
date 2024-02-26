@@ -57,6 +57,10 @@ function Player:update(dt)
         self:shoot()
     end
 
+    if self:checkCollisionWithPlatform(FloorPlatform2) then
+        self.y = FloorPlatform2.y - self.height
+    end
+
     -- Check for collision with FloorPlatform2
     -- if self:checkCollisionWithPlatform(FloorPlatform2) then
     --     self.y = FloorPlatform2.y - self.height
@@ -142,6 +146,15 @@ function Player:checkBoundaries()
         self.isJumping = false  -- Reset jump state when landing on the ground
     end 
 end
+
+
+function Player:checkCollisionWithPlatform(platform)
+    return self.x < platform.x + platform.width and
+           self.x + self.width > platform.x and
+           self.y + self.height > platform.y and
+           self.y < platform.y + platform.height
+end
+
 
 -- function Player:shoot(dt)
 --         if love.keyboard.isDown("space") then
