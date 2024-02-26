@@ -10,7 +10,8 @@ function Enemies:new(x, y)
         height = 100,
         speed = 100,
         xVel = -100, -- Initial velocity
-        direction = -1
+        direction = -1,
+        health = 3
     }
     setmetatable(enemy, self)
     self.__index = self
@@ -41,13 +42,14 @@ end
 
 function Enemies:move(dt)
     for _, enemy in ipairs(self.enemyInstances) do
-        enemy.x = enemy.x + enemy.xVel * dt * enemy.direction
+        enemy.x = enemy.x + enemy.xVel * dt
     end
 end
 
-function Enemies:checkBoundries()
+function Enemies:checkBoundaries()
     if self.x < 0 then 
         self.x = 0
+        -- self.xVel = enemy.speed
     elseif self.x + self.width > love.graphics.getWidth() then 
         self.x = love.graphics.getWidth() - self.width
     elseif self.y < 0 then 
